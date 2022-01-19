@@ -1,6 +1,5 @@
 package com.company.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,25 +11,28 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
+    @Column(name = "name", nullable = false)
     private String name;
 
-    private int price;
+    @Column(name = "price", nullable = false)
+    private Float price;
 
+    @Column(name = "warehouse", nullable = false)
     private String warehouse;
 
-    private int num;
+    @Column(name = "num", nullable = false)
+    private Integer num;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "book")
-    private Buy buy;
+    public Book() {
+    }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -42,11 +44,11 @@ public class Book {
         this.name = name;
     }
 
-    public int getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
@@ -58,19 +60,11 @@ public class Book {
         this.warehouse = warehouse;
     }
 
-    public int getNum() {
+    public Integer getNum() {
         return num;
     }
 
-    public void setNum(int num) {
+    public void setNum(Integer num) {
         this.num = num;
-    }
-
-    public Buy getBuy() {
-        return buy;
-    }
-
-    public void setBuy(Buy buy) {
-        this.buy = buy;
     }
 }

@@ -11,22 +11,26 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
+    @Column(name = "surname", nullable = false)
     private String surname;
 
+    @Column(name = "area", nullable = false)
     private String area;
 
-    private int discount;
+    @Column(name = "discount", nullable = false)
+    private Integer discount;
 
-    @OneToOne(mappedBy = "customer")
-    private Buy buy;
+    public Customer() {
 
-    public int getId() {
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -46,19 +50,11 @@ public class Customer {
         this.area = area;
     }
 
-    public int getDiscount() {
+    public Integer getDiscount() {
         return discount;
     }
 
-    public void setDiscount(int discount) {
+    public void setDiscount(Integer discount) {
         this.discount = discount;
-    }
-
-    public Buy getBuy() {
-        return buy;
-    }
-
-    public void setBuy(Buy buy) {
-        this.buy = buy;
     }
 }

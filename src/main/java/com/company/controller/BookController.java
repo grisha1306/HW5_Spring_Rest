@@ -2,12 +2,10 @@ package com.company.controller;
 
 import com.company.exception.ResourceNotFoundException;
 import com.company.model.Book;
-import com.company.repository.BookRepository;
 import com.company.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,14 +36,24 @@ public class BookController {
         return service.delete(id);
     }
 
-    @PatchMapping("/books/{id}/{name}")
-    public Map<String, Boolean> updateBook(@PathVariable(value = "id") Integer id, @PathVariable(value = "name") String name) throws ResourceNotFoundException {
-        return service.update(id,name);
+    @PatchMapping("/books/{id}")
+    public Map<String, Boolean> updateBook(@PathVariable(value = "id") Integer id, @RequestBody Book book) throws ResourceNotFoundException {
+        return service.update(id,book);
     }
 
     @PutMapping("/books/{id}")
-    public Book fullUpdate(@RequestBody Book book) {
+    public Book fullUpdate(@RequestBody Book book, @PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
 
-        return service.fullUpdate(book);
+        return service.fullUpdate(id, book);
+    }
+
+    @GetMapping("/books/name-price")
+    public List<String> nameAndPrice() {
+        return service.nameAndPrice();
+    }
+
+    @GetMapping("/books/name-price-windows-20000")
+    public List<String> nameAndPriceMore20000() {
+        return service.nameAndPriceMore20000();
     }
 }

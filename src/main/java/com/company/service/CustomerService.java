@@ -20,7 +20,7 @@ public class CustomerService {
 
     public Customer findById(int id) throws ResourceNotFoundException {
         Customer customer = repository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("contact not found by id: " + id)
+                () -> new ResourceNotFoundException("customer not found by id: " + id)
         );
 
         return repository.getById(id);
@@ -33,7 +33,7 @@ public class CustomerService {
     public Map<String,Boolean> delete(int id) throws ResourceNotFoundException {
 
         Customer customer = repository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("contact not found by id: " + id)
+                () -> new ResourceNotFoundException("customer not found by id: " + id)
         );
 
         repository.delete(customer);
@@ -46,12 +46,21 @@ public class CustomerService {
 
     }
 
-    public Map<String, Boolean> update(int id, String name) throws ResourceNotFoundException {
-        Customer customer = repository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("contact not found by id: " + id)
+    public Map<String, Boolean> update(int id, Customer customer) throws ResourceNotFoundException {
+        Customer customerPatch = repository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("customer not found by id: " + id)
         );
 
-        customer.setSurname(name);
+        if (customer.getSurname() != null)
+            customerPatch.setSurname(customer.getSurname());
+
+        if (customer.getArea() != null)
+            customerPatch.setArea(customer.getArea());
+
+        if (customer.getDiscount() != null)
+            customerPatch.setDiscount(customer.getDiscount());
+
+        repository.save(customerPatch);
 
         Map<String, Boolean> response = new HashMap<>();
 
@@ -60,8 +69,24 @@ public class CustomerService {
         return response;
     }
 
-    public Customer fullUpdate(Customer customer) {
-        return repository.save(customer);
+    public Customer fullUpdate(int id, Customer customer) throws ResourceNotFoundException {
+        Customer customerUpdate = repository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("customer not found by id: " + id)
+        );
+
+        customerUpdate.setSurname(customer.getSurname());
+        customerUpdate.setArea(customer.getArea());
+        customerUpdate.setDiscount(customer.getDiscount());
+
+        return repository.save(customerUpdate);
+    }
+
+    public List<String> differentArea() {
+        return repository.differentArea();
+    }
+
+    public List<String> surnameDiscountNizhegorodskiy() {
+        return repository.surnameDiscountNizhegorodskiy();
     }
 }
 

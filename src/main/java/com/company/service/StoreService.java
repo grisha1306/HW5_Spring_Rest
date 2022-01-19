@@ -47,12 +47,21 @@ public class StoreService {
 
     }
 
-    public Map<String, Boolean> update(int id, String name) throws ResourceNotFoundException {
-        Store store = repository.findById(id).orElseThrow(
+    public Map<String, Boolean> update(int id, Store store) throws ResourceNotFoundException {
+        Store storePatch = repository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("contact not found by id: " + id)
         );
 
-        store.setName(name);
+        if (store.getName() != null)
+            storePatch.setName(store.getName());
+
+        if (store.getArea() != null)
+            storePatch.setArea(store.getArea());
+
+        if (store.getCommission() != null)
+            storePatch.setCommission(store.getCommission());
+
+        repository.save(storePatch);
 
         Map<String, Boolean> response = new HashMap<>();
 
@@ -61,7 +70,19 @@ public class StoreService {
         return response;
     }
 
-    public Store fullUpdate(Store store) {
-        return repository.save(store);
+    public Store fullUpdate(int id, Store store) throws ResourceNotFoundException {
+        Store storeUpdate = repository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("contact not found by id: " + id)
+        );
+
+        storeUpdate.setName(store.getName());
+        storeUpdate.setArea(store.getArea());
+        storeUpdate.setCommission(store.getCommission());
+
+        return repository.save(storeUpdate);
+    }
+
+    public List<String> nameSormovoSovetskiy() {
+        return repository.nameSormovoSovetskiy();
     }
 }

@@ -10,6 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BookStoreRestApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BookStoreRestApplication.class);
+        SpringApplication.run(BookStoreRestApplication.class, args);
     }
 }

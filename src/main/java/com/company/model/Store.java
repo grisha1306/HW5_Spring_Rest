@@ -11,22 +11,26 @@ public class Store {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
+    @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "area", nullable = false)
     private String area;
 
-    private int commission;
+    @Column(name = "commission", nullable = false)
+    private Integer commission;
 
-    @OneToOne(mappedBy = "store")
-    private Buy buy;
+    public Store() {
 
-    public int getId() {
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -46,19 +50,11 @@ public class Store {
         this.area = area;
     }
 
-    public int getCommission() {
+    public Integer getCommission() {
         return commission;
     }
 
-    public void setCommission(int commission) {
+    public void setCommission(Integer commission) {
         this.commission = commission;
-    }
-
-    public Buy getBuy() {
-        return buy;
-    }
-
-    public void setBuy(Buy buy) {
-        this.buy = buy;
     }
 }

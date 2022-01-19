@@ -2,14 +2,10 @@ package com.company.controller;
 
 import com.company.exception.ResourceNotFoundException;
 import com.company.model.Customer;
-import com.company.model.Store;
-import com.company.repository.CustomerRepository;
 import com.company.service.CustomerService;
-import com.company.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,15 +36,24 @@ public class CustomerController {
         return service.delete(id);
     }
 
-    @PatchMapping("/customer/{id}/{surname}")
-    public Map<String, Boolean> updateBook(@PathVariable(value = "id") Integer id, @PathVariable(value = "surname") String surname) throws ResourceNotFoundException {
-        return service.update(id,surname);
+    @PatchMapping("/customer/{id}")
+    public Map<String, Boolean> updateBook(@PathVariable(value = "id") Integer id, @RequestBody Customer customer) throws ResourceNotFoundException {
+        return service.update(id, customer);
     }
 
     @PutMapping("/customer/{id}")
-    public Customer fullUpdate(@RequestBody Customer customer) {
+    public Customer fullUpdate(@PathVariable(value = "id") Integer id, @RequestBody Customer customer) throws ResourceNotFoundException {
 
-        return service.fullUpdate(customer);
+        return service.fullUpdate(id, customer);
     }
 
+    @GetMapping("/customer/different-area")
+    public List<String> differentArea() {
+        return service.differentArea();
+    }
+
+    @GetMapping("/customer/surname-discount-nizhegorodskiy")
+    public List<String> surnameDiscountNizhegorodskiy() {
+        return service.surnameDiscountNizhegorodskiy();
+    }
 }
